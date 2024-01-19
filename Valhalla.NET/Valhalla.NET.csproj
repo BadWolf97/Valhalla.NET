@@ -12,6 +12,7 @@
     <Copyright>Apache License 2.0</Copyright>
     <Description>A very simple API-Client for an Valhalla Server</Description>
     <Nullable>enable</Nullable>
+    <Version>0.0.1-beta</Version>
   </PropertyGroup>
 
   <ItemGroup>
