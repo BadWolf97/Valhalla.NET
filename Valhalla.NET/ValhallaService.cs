@@ -1,19 +1,15 @@
 ﻿using FPH.ValhallaNET.Requests;
 using FPH.ValhallaNET.Responses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Json;
-using System.Text;
 using System.Text.Json.Serialization;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace FPH.ValhallaNET
 {
     public interface IValhallaService
     {
-        public Task<RouteResponse> GetRouteAsync(RouteRequest routeRequest, CancellationToken cancellationToken);
+        public Task<RouteResponse> GetRouteAsync(RouteRequest routeRequest);
+        public Task<MatrixResponse > GetMatrixAsync(MatrixRequest  routeRequest);
     }
     public class ValhallaService : IValhallaService
     {
@@ -41,7 +37,7 @@ namespace FPH.ValhallaNET
 
             throw new HttpRequestException(await response.Content.ReadAsStringAsync(), null, response.StatusCode);
         }
-        public async Task<RouteResponse> GetRouteAsync(RouteRequest routeRequest, CancellationToken cancellationToken)
+        public async Task<RouteResponse> GetRouteAsync(RouteRequest routeRequest)
         {
             try
             {
@@ -49,6 +45,25 @@ namespace FPH.ValhallaNET
 
                 string content = await GetRequestAsync(requestUrl, routeRequest);
                 RouteResponse? response = RouteResponse.FromJson(content);
+                if (response == null)
+                {
+                    throw new Exception("Deserialization not successfull.");
+                }
+                return response;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public async Task<MatrixResponse> GetMatrixAsync(MatrixRequest routeRequest)
+        {
+            try
+            {
+                string requestUrl = $"{apiUrl}/sources_to_targets";
+
+                string content = await GetRequestAsync(requestUrl, routeRequest);
+                MatrixResponse? response = MatrixResponse.FromJson(content);
                 if (response == null)
                 {
                     throw new Exception("Deserialization not successfull.");
