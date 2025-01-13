@@ -1,4 +1,5 @@
-﻿using FPH.ValhallaNET.Models;
+﻿using FPH.ValhallaNET.Enums;
+using FPH.ValhallaNET.Models;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -19,6 +20,14 @@ namespace FPH.ValhallaNET.Responses
         [JsonPropertyName("from_index")]
         public int FromIndex { get; set; }
 
+        [JsonPropertyName("date_time")]
+        public string? DateTime { get; set; }
+
+        [JsonPropertyName("time_zone_offset")]
+        public int TimeZoneOffset { get; set; }
+
+        [JsonPropertyName("time_zone_name")]
+        public string? TimeZoneName { get; set; }
     }
 
     // A class to represent a matrix response
@@ -30,13 +39,30 @@ namespace FPH.ValhallaNET.Responses
         [JsonPropertyName("targets")]
         public MatrixLocation[]? Targets { get; set; }
 
-        [JsonPropertyName("matrix")]
+        [JsonPropertyName("sources_to_targets")]
         public TimeDistance[][]? Matrix { get; set; }
+
+        [JsonPropertyName("id")]
+        public string? Id { get; set; }
+
+        [JsonPropertyName("algorithm")]
+        public MatrixAlgorithm? Algorithm { get; set; }
+
+        [JsonPropertyName("units")]
+        public Unit? Unit { get; set; }
+
+        [JsonPropertyName("warnings")]
+        public string[]? Warnings { get; set; }
 
         // A method to deserialize the matrix response from JSON
         public static MatrixResponse? FromJson(string json)
         {
-            return JsonSerializer.Deserialize<MatrixResponse>(json);
+            var options = new JsonSerializerOptions
+            {
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+            };
+            return JsonSerializer.Deserialize<MatrixResponse>(json, options);
         }
     }
 

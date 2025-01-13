@@ -3,13 +3,15 @@ using FPH.ValhallaNET.Responses;
 using System.Net.Http.Json;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using System.Web;
+using System.Collections.Specialized;
 
 namespace FPH.ValhallaNET
 {
     public interface IValhallaService
     {
         public Task<RouteResponse> GetRouteAsync(RouteRequest routeRequest);
-        public Task<MatrixResponse > GetMatrixAsync(MatrixRequest  routeRequest);
+        public Task<MatrixResponse> GetMatrixAsync(MatrixRequest routeRequest);
     }
     public class ValhallaService : IValhallaService
     {
@@ -22,11 +24,12 @@ namespace FPH.ValhallaNET
             this.httpClient = httpClient;
         }
 
-        private async Task<string> GetRequestAsync(string url, object payload)
+        private async Task<string> PostRequestAsync(string url, object payload)
         {
             var options = new JsonSerializerOptions
             {
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
             };
             HttpResponseMessage response = await httpClient.PostAsJsonAsync(url, payload, options);
 
@@ -37,13 +40,43 @@ namespace FPH.ValhallaNET
 
             throw new HttpRequestException(await response.Content.ReadAsStringAsync(), null, response.StatusCode);
         }
+
+        private async Task<string> GetRequestAsync(string url, object payload)
+        {
+            var options = new JsonSerializerOptions
+            {
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+            };
+            string jsonRequest = JsonSerializer.Serialize(payload, options);
+            if (String.IsNullOrEmpty(jsonRequest))
+            {
+                throw new Exception("Serialization not successfull.");
+            }
+
+            UriBuilder ub = new UriBuilder(url);
+            NameValueCollection nvc = HttpUtility.ParseQueryString(ub.Query);
+            nvc.Add("json", jsonRequest);
+            ub.Query = nvc.ToString();
+
+            HttpResponseMessage response = await httpClient.GetAsync(ub.ToString());
+
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsStringAsync();
+            }
+
+            throw new HttpRequestException(await response.Content.ReadAsStringAsync(), null, response.StatusCode);
+        }
+
         public async Task<RouteResponse> GetRouteAsync(RouteRequest routeRequest)
         {
             try
             {
                 string requestUrl = $"{apiUrl}/route";
 
-                string content = await GetRequestAsync(requestUrl, routeRequest);
+                string content = await PostRequestAsync(requestUrl, routeRequest);
                 RouteResponse? response = RouteResponse.FromJson(content);
                 if (response == null)
                 {
