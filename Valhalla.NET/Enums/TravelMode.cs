@@ -1,5 +1,5 @@
 ﻿// ----------------------------------------------------------------------------
-// <copyright file="MatrixAlgorithm.cs" company="Freie Programme Hohenstein">
+// <copyright file="TravelMode.cs" company="Freie Programme Hohenstein">
 // Copyright (c) Freie Programme Hohenstein.
 // Licensed under Apache-2.0 license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -8,23 +8,28 @@
 namespace FPH.ValhallaNET.Enums
 {
     /// <summary>
-    /// Enumeration of different matrix algorithms.
+    /// An enumeration to represent the travel mode.
     /// </summary>
-    public enum MatrixAlgorithm
+    public enum TravelMode
     {
         /// <summary>
-        /// Represents a time distance matrix algorithm.
+        /// The travel mode is driving.
         /// </summary>
-        TimeDistanceMatrix,
+        Drive,
 
         /// <summary>
-        /// Represents a cost matrix algorithm.
+        /// The travel mode is walking.
         /// </summary>
-        CostMatrix,
+        Pedestrian,
 
         /// <summary>
-        /// Represents a time distance BSS matrix algorithm.
+        /// The travel mode is cycling.
         /// </summary>
-        TimeDistanceBssMatrix,
+        Bicycle,
+
+        /// <summary>
+        /// The travel mode is transit.
+        /// </summary>
+        Transit,
     }
 }

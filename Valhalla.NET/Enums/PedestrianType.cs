@@ -1,5 +1,5 @@
 ﻿// ----------------------------------------------------------------------------
-// <copyright file="MatrixAlgorithm.cs" company="Freie Programme Hohenstein">
+// <copyright file="PedestrianType.cs" company="Freie Programme Hohenstein">
 // Copyright (c) Freie Programme Hohenstein.
 // Licensed under Apache-2.0 license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -8,23 +8,23 @@
 namespace FPH.ValhallaNET.Enums
 {
     /// <summary>
-    /// Enumeration of different matrix algorithms.
+    /// An enumeration of the different types of pedestrians.
     /// </summary>
-    public enum MatrixAlgorithm
+    public enum PedestrianType
     {
         /// <summary>
-        /// Represents a time distance matrix algorithm.
+        /// Represents a pedestrian which is neither blind nor in a wheelchair.
         /// </summary>
-        TimeDistanceMatrix,
+        Foot,
 
         /// <summary>
-        /// Represents a cost matrix algorithm.
+        /// Represents a blind pedestrian.
         /// </summary>
-        CostMatrix,
+        Blind,
 
         /// <summary>
-        /// Represents a time distance BSS matrix algorithm.
+        /// Represents a pedestrian in a wheelchair.
         /// </summary>
-        TimeDistanceBssMatrix,
+        Wheelchair,
     }
 }

@@ -1,16 +1,48 @@
-﻿using System.Text.Json.Serialization;
+﻿// ----------------------------------------------------------------------------
+// <copyright file="RouteLeg.cs" company="Freie Programme Hohenstein">
+// Copyright (c) Freie Programme Hohenstein.
+// Licensed under Apache-2.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+// ----------------------------------------------------------------------------
+
+using System.Text.Json.Serialization;
 
 namespace FPH.ValhallaNET.Models
 {
-    // A class to represent a leg of the route
+    /// <summary>
+    /// A class to represent a leg of a route.
+    /// </summary>
     public class RouteLeg
     {
+        /// <summary>
+        /// Gets or sets the encoded polyline of the leg.
+        /// </summary>
         [JsonPropertyName("shape")]
-        public string? Shape { get; set; } // The encoded polyline of the leg
+        public string? Shape { get; set; }
 
+        /// <summary>
+        /// Gets or sets the summary of the leg.
+        /// </summary>
+        [JsonPropertyName("summary")]
+        public RouteSummary? Summary { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maneuvers of the leg.
+        /// </summary>
+        [JsonPropertyName("maneuvers")]
+        public RouteManeuver[]? Maneuvers { get; set; }
+
+        /// <summary>
+        /// Gets the coordinates withing the leg.
+        /// </summary>
+        /// <returns>The Coordinates.</returns>
         public List<Tuple<double, double>>? Coordinates()
         {
-            if (Shape == null) return null;
+            if (this.Shape == null)
+            {
+                return null;
+            }
+
             int i = 0;
             const double kInvPolylinePrecision = 1.0 / 1E6;
 
@@ -21,7 +53,7 @@ namespace FPH.ValhallaNET.Models
                 int byteValue, shift = 0, result = 0;
                 do
                 {
-                    byteValue = Shape[i++] - 63;
+                    byteValue = this.Shape[i++] - 63;
                     result |= (byteValue & 0x1f) << shift;
                     shift += 5;
                 } while (byteValue >= 0x20);
@@ -34,7 +66,7 @@ namespace FPH.ValhallaNET.Models
             List<Tuple<double, double>> coords = new List<Tuple<double, double>>();
             double lastLon = 0, lastLat = 0;
 
-            while (i < Shape.Length)
+            while (i < this.Shape.Length)
             {
                 // Decode the coordinates, lat first for some reason
                 double lat = deserialize(lastLat);
@@ -50,11 +82,5 @@ namespace FPH.ValhallaNET.Models
 
             return coords;
         }
-
-        [JsonPropertyName("summary")]
-        public RouteSummary? Summary { get; set; } // The summary of the leg
-
-        [JsonPropertyName("maneuvers")]
-        public RouteManeuver[]? Maneuvers { get; set; } // The maneuvers of the leg
     }
 }

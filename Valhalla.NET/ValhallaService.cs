@@ -1,27 +1,89 @@
-﻿using FPH.ValhallaNET.Requests;
-using FPH.ValhallaNET.Responses;
-using System.Net.Http.Json;
-using System.Text.Json.Serialization;
-using System.Text.Json;
-using System.Web;
+﻿// ----------------------------------------------------------------------------
+// <copyright file="ValhallaService.cs" company="Freie Programme Hohenstein">
+// Copyright (c) Freie Programme Hohenstein.
+// Licensed under Apache-2.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+// ----------------------------------------------------------------------------
+
 using System.Collections.Specialized;
+using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Web;
+using FPH.ValhallaNET.Requests;
+using FPH.ValhallaNET.Responses;
 
 namespace FPH.ValhallaNET
 {
-    public interface IValhallaService
-    {
-        public Task<RouteResponse> GetRouteAsync(RouteRequest routeRequest);
-        public Task<MatrixResponse> GetMatrixAsync(MatrixRequest routeRequest);
-    }
+    /// <summary>
+    /// The Valhalla Service to get route and matrix information.
+    /// </summary>
     public class ValhallaService : IValhallaService
     {
         private readonly HttpClient httpClient;
         private readonly string apiUrl;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ValhallaService"/> class.
+        /// </summary>
+        /// <param name="apiUrl">The Base API-URL.</param>
+        /// <param name="httpClient">An httpClient.</param>
         public ValhallaService(string apiUrl, HttpClient httpClient)
         {
-            this.apiUrl = apiUrl;
+            this.apiUrl = apiUrl.TrimEnd('/');
             this.httpClient = httpClient;
+        }
+
+        /// <summary>
+        /// Asynchronously gets the route information based on the provided route request.
+        /// </summary>
+        /// <param name="routeRequest">The RouteRequest containing the request.</param>
+        /// <returns>The RouteResponse containing the response.</returns>
+        public async Task<RouteResponse> GetRouteAsync(RouteRequest routeRequest)
+        {
+            try
+            {
+                string requestUrl = $"{this.apiUrl}/route";
+
+                string content = await this.PostRequestAsync(requestUrl, routeRequest);
+                RouteResponse? response = RouteResponse.FromJson(content);
+                if (response == null)
+                {
+                    throw new Exception("Deserialization not successfull.");
+                }
+
+                return response;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Asynchronously gets the matrix information based on the provided matrix request.
+        /// </summary>
+        /// <param name="routeRequest">The MatrixRequest containing the request.</param>
+        /// <returns>The MatrixResponse containing the response.</returns>
+        public async Task<MatrixResponse> GetMatrixAsync(MatrixRequest routeRequest)
+        {
+            try
+            {
+                string requestUrl = $"{this.apiUrl}/sources_to_targets";
+
+                string content = await this.GetRequestAsync(requestUrl, routeRequest);
+                MatrixResponse? response = MatrixResponse.FromJson(content);
+                if (response == null)
+                {
+                    throw new Exception("Deserialization not successfull.");
+                }
+
+                return response;
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         private async Task<string> PostRequestAsync(string url, object payload)
@@ -29,9 +91,9 @@ namespace FPH.ValhallaNET
             var options = new JsonSerializerOptions
             {
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) },
             };
-            HttpResponseMessage response = await httpClient.PostAsJsonAsync(url, payload, options);
+            HttpResponseMessage response = await this.httpClient.PostAsJsonAsync(url, payload, options);
 
             if (response.IsSuccessStatusCode)
             {
@@ -46,10 +108,10 @@ namespace FPH.ValhallaNET
             var options = new JsonSerializerOptions
             {
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) },
             };
             string jsonRequest = JsonSerializer.Serialize(payload, options);
-            if (String.IsNullOrEmpty(jsonRequest))
+            if (string.IsNullOrEmpty(jsonRequest))
             {
                 throw new Exception("Serialization not successfull.");
             }
@@ -59,8 +121,7 @@ namespace FPH.ValhallaNET
             nvc.Add("json", jsonRequest);
             ub.Query = nvc.ToString();
 
-            HttpResponseMessage response = await httpClient.GetAsync(ub.ToString());
-
+            HttpResponseMessage response = await this.httpClient.GetAsync(ub.ToString());
 
             if (response.IsSuccessStatusCode)
             {
@@ -68,45 +129,6 @@ namespace FPH.ValhallaNET
             }
 
             throw new HttpRequestException(await response.Content.ReadAsStringAsync(), null, response.StatusCode);
-        }
-
-        public async Task<RouteResponse> GetRouteAsync(RouteRequest routeRequest)
-        {
-            try
-            {
-                string requestUrl = $"{apiUrl}/route";
-
-                string content = await PostRequestAsync(requestUrl, routeRequest);
-                RouteResponse? response = RouteResponse.FromJson(content);
-                if (response == null)
-                {
-                    throw new Exception("Deserialization not successfull.");
-                }
-                return response;
-            }
-            catch
-            {
-                throw;
-            }
-        }
-        public async Task<MatrixResponse> GetMatrixAsync(MatrixRequest routeRequest)
-        {
-            try
-            {
-                string requestUrl = $"{apiUrl}/sources_to_targets";
-
-                string content = await GetRequestAsync(requestUrl, routeRequest);
-                MatrixResponse? response = MatrixResponse.FromJson(content);
-                if (response == null)
-                {
-                    throw new Exception("Deserialization not successfull.");
-                }
-                return response;
-            }
-            catch
-            {
-                throw;
-            }
         }
     }
 }

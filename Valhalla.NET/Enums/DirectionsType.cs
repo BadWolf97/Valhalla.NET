@@ -1,5 +1,5 @@
 ﻿// ----------------------------------------------------------------------------
-// <copyright file="MatrixAlgorithm.cs" company="Freie Programme Hohenstein">
+// <copyright file="DirectionsType.cs" company="Freie Programme Hohenstein">
 // Copyright (c) Freie Programme Hohenstein.
 // Licensed under Apache-2.0 license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -8,23 +8,23 @@
 namespace FPH.ValhallaNET.Enums
 {
     /// <summary>
-    /// Enumeration of different matrix algorithms.
+    /// An enumeration to represent the directions type, aka the verbosity of the return.
     /// </summary>
-    public enum MatrixAlgorithm
+    public enum DirectionsType
     {
         /// <summary>
-        /// Represents a time distance matrix algorithm.
+        /// Indicating no maneuvers or instructions should be returned.
         /// </summary>
-        TimeDistanceMatrix,
+        None = 0,
 
         /// <summary>
-        /// Represents a cost matrix algorithm.
+        /// Indicating only maneuvers should be returned.
         /// </summary>
-        CostMatrix,
+        Manuevers = 1,
 
         /// <summary>
-        /// Represents a time distance BSS matrix algorithm.
+        /// Inidcating that Maneuvers with instructions should be returned.
         /// </summary>
-        TimeDistanceBssMatrix,
+        Instructions = 2,
     }
 }

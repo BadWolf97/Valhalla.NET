@@ -1,5 +1,5 @@
 ﻿// ----------------------------------------------------------------------------
-// <copyright file="Polygon.cs" company="Freie Programme Hohenstein">
+// <copyright file="SignInformationElement.cs" company="Freie Programme Hohenstein">
 // Copyright (c) Freie Programme Hohenstein.
 // Licensed under Apache-2.0 license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -10,20 +10,20 @@ using System.Text.Json.Serialization;
 namespace FPH.ValhallaNET.Models
 {
     /// <summary>
-    /// A class to represent a polygon to avoid on the route.
+    /// A class to represent a sign element.
     /// </summary>
-    public class Polygon
+    public class SignInformationElement
     {
         /// <summary>
-        /// The type of the polygon, must be "Polygon".
+        /// Gets or sets the text of the element.
         /// </summary>
-        [JsonPropertyName("type")]
-        public const string Type = "Polygon";
+        [JsonPropertyName("text")]
+        public required string Text { get; set; }
 
         /// <summary>
-        /// Gets or sets the coordinates of the polygon vertices in the format [[[lon1, lat1], [lon2, lat2], ...]].
+        /// Gets or sets the frequency of this sign element within a set a consecutive signs.
         /// </summary>
-        [JsonPropertyName("coordinates")]
-        public required double[][] Coordinates { get; set; }
+        [JsonPropertyName("consecutive_count")]
+        public int? ConsecutiveCount { get; set; }
     }
 }
