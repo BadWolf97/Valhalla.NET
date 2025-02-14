@@ -29,16 +29,22 @@ namespace FPH.ValhallaNET.Requests
         public required Location[] Locations { get; set; }
 
         /// <summary>
-        /// Gets or sets the costing options for the route.
+        /// Gets or sets the costing model for the route.
         /// </summary>
         [JsonPropertyName("costing")]
-        public CostingOptions? CostingOptions { get; set; }
+        public required CostingModel Costing { get; set; }
+
+        /// <summary>
+        /// Gets or sets the costing options for the route.
+        /// </summary>
+        [JsonPropertyName("costing_options")]
+        public KeyValuePair<CostingModel, CostingOptions>? CostingOptions { get; set; }
 
         /// <summary>
         /// Gets or sets additional costing options for the route.
         /// </summary>
         [JsonPropertyName("recostings")]
-        public CostingOptions[]? RecostingOptions { get; set; }
+        public Dictionary<CostingModel, CostingOptions>? RecostingOptions { get; set; }
 
         /// <summary>
         /// Gets or sets the unit used in the route. Defaults to Kilometers.

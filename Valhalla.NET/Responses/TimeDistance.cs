@@ -21,13 +21,13 @@ namespace FPH.ValhallaNET.Responses
         /// Gets or sets the time in seconds.
         /// </summary>
         [JsonPropertyName("time")]
-        public double Time { get; set; }
+        public double? Time { get; set; }
 
         /// <summary>
         /// Gets or sets the distance in meters.
         /// </summary>
         [JsonPropertyName("distance")]
-        public double Distance { get; set; }
+        public double? Distance { get; set; }
 
         /// <summary>
         /// Gets or sets the location of the source in the original request.

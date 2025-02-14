@@ -33,7 +33,13 @@ namespace FPH.ValhallaNET.Requests
         /// Gets or sets the costing options for the route.
         /// </summary>
         [JsonPropertyName("costing")]
-        public CostingOptions? CostingOptions { get; set; }
+        public required CostingModel Costing { get; set; }
+
+        /// <summary>
+        /// Gets or sets the costing options for the route.
+        /// </summary>
+        [JsonPropertyName("costing_options")]
+        public Dictionary<CostingModel, CostingOptions>? CostingOptions { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time for time-dependent routing.
