@@ -33,5 +33,12 @@ namespace FPH.ValhallaNET
         /// <param name="routeRequest">The matrix request containing the parameters for the matrix.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains the matrix response.</returns>
         public Task<MatrixResponse> GetMatrixAsync(MatrixRequest routeRequest);
+
+        /// <summary>
+        /// Asynchronously gets the isochrone information based on the provided isochrone request.
+        /// </summary>
+        /// <param name="isochroneRequest">The isochrone request containing the parameters for the isochrone.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the isochrone response.</returns>
+        public Task<IsochroneResponse> GetIsochroneAsync(IsochroneRequest isochroneRequest);
     }
 }

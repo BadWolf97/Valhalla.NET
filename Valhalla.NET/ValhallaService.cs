@@ -34,11 +34,7 @@ namespace FPH.ValhallaNET
             this.httpClient = httpClient;
         }
 
-        /// <summary>
-        /// Asynchronously gets the route information based on the provided route request.
-        /// </summary>
-        /// <param name="routeRequest">The RouteRequest containing the request.</param>
-        /// <returns>The RouteResponse containing the response.</returns>
+        /// <inheritdoc/>
         public async Task<RouteResponse> GetRouteAsync(RouteRequest routeRequest)
         {
             try
@@ -60,11 +56,7 @@ namespace FPH.ValhallaNET
             }
         }
 
-        /// <summary>
-        /// Asynchronously gets the matrix information based on the provided matrix request.
-        /// </summary>
-        /// <param name="routeRequest">The MatrixRequest containing the request.</param>
-        /// <returns>The MatrixResponse containing the response.</returns>
+        /// <inheritdoc/>
         public async Task<MatrixResponse> GetMatrixAsync(MatrixRequest routeRequest)
         {
             try
@@ -85,6 +77,28 @@ namespace FPH.ValhallaNET
                 throw;
             }
         }
+
+        /// <inheritdoc/>
+        public async Task<IsochroneResponse> GetIsochroneAsync(IsochroneRequest isochroneRequest)
+        {
+            try
+            {
+                string requestUrl = $"{this.apiUrl}/isochrone";
+                string content = await this.PostRequestAsync(requestUrl, isochroneRequest);
+                IsochroneResponse? response = IsochroneResponse.FromJson(content);
+                if (response == null)
+                {
+                    throw new Exception("Deserialization not successfull.");
+                }
+                return response;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+
 
         private async Task<string> PostRequestAsync(string url, object payload)
         {

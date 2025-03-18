@@ -80,10 +80,10 @@ namespace FPH.ValhallaNET.Requests
         public Location[]? AvoidLocations { get; set; }
 
         /// <summary>
-        /// Gets or sets the polygons to avoid on the route. Roads intersecting these rings will be avoided during path finding. If you only need to avoid a few specific roads, it's much more efficient to use exclude_locations. Valhalla will close open rings (i.e. copy the first coordinate to the last position).
+        /// Gets or sets the polygons to avoid on the route. Roads intersecting these rings will be avoided during path finding. If you only need to avoid a few specific roads, it's much more efficient to use exclude_locations. Valhalla will close open rings (i.e. copy the first coordinate to the last position). This must be of type Polygon.
         /// </summary>
         [JsonPropertyName("exclude_polygons")]
-        public Polygon[]? AvoidPolygons { get; set; }
+        public Geometry[]? AvoidPolygons { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time for time-dependent routing.
