@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using FPH.ValhallaNET.Converters;
 using FPH.ValhallaNET.Models;
 
 namespace FPH.ValhallaNET.Responses
@@ -35,7 +36,19 @@ namespace FPH.ValhallaNET.Responses
         /// <returns>The deserialized <see cref="IsochroneResponse"/> object.</returns>
         public static IsochroneResponse? FromJson(string json)
         {
-            return JsonSerializer.Deserialize<IsochroneResponse>(json);
+            var options = new JsonSerializerOptions
+            {
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase), new GeometryJsonConverter() },
+            };
+            try
+            {
+                return JsonSerializer.Deserialize<IsochroneResponse>(json, options);
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }

@@ -5,6 +5,8 @@
 // </copyright>
 // ----------------------------------------------------------------------------
 
+using System.Text.Json.Serialization;
+
 namespace FPH.ValhallaNET.Enums
 {
     /// <summary>
@@ -15,11 +17,13 @@ namespace FPH.ValhallaNET.Enums
         /// <summary>
         /// Represents a time isochrone algorithm.
         /// </summary>
+        [JsonPropertyName("time")]
         Time,
 
         /// <summary>
         /// Represents a cost isochrone algorithm.
         /// </summary>
+        [JsonPropertyName("distance")]
         Distance,
     }
 }

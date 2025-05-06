@@ -90,6 +90,7 @@ namespace FPH.ValhallaNET
                 {
                     throw new Exception("Deserialization not successfull.");
                 }
+
                 return response;
             }
             catch

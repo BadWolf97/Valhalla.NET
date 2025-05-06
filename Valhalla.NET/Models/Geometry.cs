@@ -5,6 +5,7 @@
 // </copyright>
 // ----------------------------------------------------------------------------
 
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using FPH.ValhallaNET.Enums;
 
@@ -25,6 +26,6 @@ namespace FPH.ValhallaNET.Models
         /// Gets or sets the coordinates of the polygon vertices. The first and last coordinates must be the same to close the polygon. The coordinates are in the format [[[lon1, lat1], [lon2, lat2], ...]].
         /// </summary>
         [JsonPropertyName("coordinates")]
-        public required List<List<double[]>> Coordinates { get; set; }
+        public required List<List<List<double[]>>> Coordinates { get; set; }
     }
 }

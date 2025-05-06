@@ -30,6 +30,6 @@ namespace FPH.ValhallaNET.Models
         /// Gets or sets the color of the isochrone. Specify it as a Hex value, but without the #, such as "ff0000" for red. If no color is specified, the isochrone service will assign a default color to the output.
         /// </summary>
         [JsonPropertyName("color")]
-        public required string Color { get; set; }
+        public string? Color { get; set; }
     }
 }
