@@ -1,4 +1,11 @@
-﻿using System.Text.Json;
+﻿// ----------------------------------------------------------------------------
+// <copyright file="GeometryJsonConverter.cs" company="Freie Programme Hohenstein">
+// Copyright (c) Freie Programme Hohenstein.
+// Licensed under Apache-2.0 license. See LICENSE file in the project root for full license information.
+// </copyright>
+// ----------------------------------------------------------------------------
+
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using FPH.ValhallaNET.Enums;
 using FPH.ValhallaNET.Models;

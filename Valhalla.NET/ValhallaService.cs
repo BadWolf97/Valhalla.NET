@@ -99,8 +99,6 @@ namespace FPH.ValhallaNET
             }
         }
 
-
-
         private async Task<string> PostRequestAsync(string url, object payload)
         {
             var options = new JsonSerializerOptions
