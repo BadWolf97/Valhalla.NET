@@ -36,7 +36,7 @@ namespace FPH.ValhallaNET.Responses
         /// <returns>The deserialized <see cref="IsochroneResponse"/> object.</returns>
         public static IsochroneResponse? FromJson(string json)
         {
-            var options = new JsonSerializerOptions
+            JsonSerializerOptions options = new()
             {
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
                 Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase), new GeometryJsonConverter() },

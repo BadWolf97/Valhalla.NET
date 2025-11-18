@@ -65,7 +65,7 @@ namespace FPH.ValhallaNET.Responses
         /// <returns>The deserialized <see cref="MatrixResponse"/> object.</returns>
         public static MatrixResponse? FromJson(string json)
         {
-            var options = new JsonSerializerOptions
+            JsonSerializerOptions options = new()
             {
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
                 Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) },

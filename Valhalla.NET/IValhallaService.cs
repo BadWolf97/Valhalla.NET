@@ -5,11 +5,6 @@
 // </copyright>
 // ----------------------------------------------------------------------------
 
-using System.Collections.Specialized;
-using System.Net.Http.Json;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Web;
 using FPH.ValhallaNET.Requests;
 using FPH.ValhallaNET.Responses;
 

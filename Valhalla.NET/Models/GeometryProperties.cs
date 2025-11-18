@@ -13,7 +13,7 @@ namespace FPH.ValhallaNET.Models
     /// <summary>
     /// A class to represent the properties of a geometry.
     /// </summary>
-   public class GeometryProperties
+    public class GeometryProperties
     {
         /// <summary>
         /// Gets or sets the fill opacity of the geometry.

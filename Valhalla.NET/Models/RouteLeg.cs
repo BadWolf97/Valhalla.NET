@@ -63,7 +63,7 @@ namespace FPH.ValhallaNET.Models
                 return previous + ((result & 1) == 1 ? ~(result >> 1) : result >> 1);
             };
 
-            List<Tuple<double, double>> coords = new List<Tuple<double, double>>();
+            List<Tuple<double, double>> coords = [];
             double lastLon = 0, lastLat = 0;
 
             while (i < this.Shape.Length)

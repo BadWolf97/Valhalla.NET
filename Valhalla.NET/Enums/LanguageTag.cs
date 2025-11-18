@@ -5,7 +5,6 @@
 // </copyright>
 // ----------------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace FPH.ValhallaNET.Enums

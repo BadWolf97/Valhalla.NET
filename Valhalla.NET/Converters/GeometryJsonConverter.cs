@@ -27,54 +27,52 @@ namespace FPH.ValhallaNET.Converters
         /// <exception cref="JsonException">Thrown when the JSON is invalid.</exception>
         public override Geometry Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            using (JsonDocument doc = JsonDocument.ParseValue(ref reader))
+            using JsonDocument doc = JsonDocument.ParseValue(ref reader);
+            var root = doc.RootElement;
+            string? json_type = root.GetProperty("type").GetString();
+            string json_coordinates = root.GetProperty("coordinates").ToString();
+
+            if (json_type == null || json_coordinates == null)
             {
-                var root = doc.RootElement;
-                var json_type = root.GetProperty("type").GetString();
-                var json_coordinates = root.GetProperty("coordinates").ToString();
-
-                if (json_type == null || json_coordinates == null)
-                {
-                    throw new JsonException();
-                }
-
-                GeometryType type = Enum.Parse<GeometryType>(json_type, true);
-                List<List<List<double[]>>> coordinates = new();
-
-                switch (type)
-                {
-                    case GeometryType.MultiPolygon:
-                        var multipolygon = JsonSerializer.Deserialize<List<List<List<double[]>>>>(json_coordinates, options);
-                        if (multipolygon != null)
-                        {
-                            coordinates = multipolygon;
-                        }
-
-                        break;
-                    case GeometryType.Polygon:
-                        var polygon = JsonSerializer.Deserialize<List<List<double[]>>>(json_coordinates, options);
-                        if (polygon != null)
-                        {
-                            coordinates.Add(polygon);
-                        }
-
-                        break;
-                    case GeometryType.LineString:
-                        var lineString = JsonSerializer.Deserialize<List<double[]>>(json_coordinates, options);
-                        if (lineString != null)
-                        {
-                            coordinates.Add(new List<List<double[]>> { lineString });
-                        }
-
-                        break;
-                }
-
-                return new Geometry
-                {
-                    Type = Enum.Parse<GeometryType>(json_type, true),
-                    Coordinates = coordinates,
-                };
+                throw new JsonException();
             }
+
+            GeometryType type = Enum.Parse<GeometryType>(json_type, true);
+            List<List<List<double[]>>> coordinates = [];
+
+            switch (type)
+            {
+                case GeometryType.MultiPolygon:
+                    var multipolygon = JsonSerializer.Deserialize<List<List<List<double[]>>>>(json_coordinates, options);
+                    if (multipolygon != null)
+                    {
+                        coordinates = multipolygon;
+                    }
+
+                    break;
+                case GeometryType.Polygon:
+                    var polygon = JsonSerializer.Deserialize<List<List<double[]>>>(json_coordinates, options);
+                    if (polygon != null)
+                    {
+                        coordinates.Add(polygon);
+                    }
+
+                    break;
+                case GeometryType.LineString:
+                    var lineString = JsonSerializer.Deserialize<List<double[]>>(json_coordinates, options);
+                    if (lineString != null)
+                    {
+                        coordinates.Add([lineString]);
+                    }
+
+                    break;
+            }
+
+            return new Geometry
+            {
+                Type = Enum.Parse<GeometryType>(json_type, true),
+                Coordinates = coordinates,
+            };
         }
 
         /// <summary>

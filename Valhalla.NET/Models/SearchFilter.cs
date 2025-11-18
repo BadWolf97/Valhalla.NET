@@ -5,7 +5,6 @@
 // </copyright>
 // ----------------------------------------------------------------------------
 
-using System;
 using System.Text.Json.Serialization;
 
 namespace FPH.ValhallaNET.Models

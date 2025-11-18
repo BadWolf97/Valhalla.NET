@@ -121,7 +121,7 @@ namespace FPH.ValhallaNET.Requests
         /// <returns>A Json String.</returns>
         public string ToJson()
         {
-            var options = new JsonSerializerOptions
+            JsonSerializerOptions options = new()
             {
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             };

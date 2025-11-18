@@ -101,7 +101,7 @@ namespace FPH.ValhallaNET
 
         private async Task<string> PostRequestAsync(string url, object payload)
         {
-            var options = new JsonSerializerOptions
+            JsonSerializerOptions options = new()
             {
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
                 Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) },
@@ -118,7 +118,7 @@ namespace FPH.ValhallaNET
 
         private async Task<string> GetRequestAsync(string url, object payload)
         {
-            var options = new JsonSerializerOptions
+            JsonSerializerOptions options = new()
             {
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
                 Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) },
@@ -129,7 +129,7 @@ namespace FPH.ValhallaNET
                 throw new Exception("Serialization not successfull.");
             }
 
-            UriBuilder ub = new UriBuilder(url);
+            UriBuilder ub = new(url);
             NameValueCollection nvc = HttpUtility.ParseQueryString(ub.Query);
             nvc.Add("json", jsonRequest);
             ub.Query = nvc.ToString();
