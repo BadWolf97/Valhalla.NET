@@ -148,7 +148,7 @@ namespace FPH.ValhallaNET.Models
         public double? CountryCrossingPenalty { get; set; }
 
         /// <summary>
-        /// Gets or sets the metric to quasi-shortest, i.e. purely distance-based costing. Note, this will disable all other costings & penalties. Also note, shortest will not disable hierarchy pruning, leading to potentially sub-optimal routes for some costing models. The default is false.
+        /// Gets or sets the metric to quasi-shortest, i.e. purely distance-based costing. Note, this will disable all other costings + penalties. Also note, shortest will not disable hierarchy pruning, leading to potentially sub-optimal routes for some costing models. The default is false.
         /// </summary>
         /// <remarks>Available for pedestrian, auto, motor_scooter, motorcycle, bus, truck and bicycle costing methods.</remarks>
         [JsonPropertyName("shortest")]
@@ -190,7 +190,7 @@ namespace FPH.ValhallaNET.Models
         public bool? IgnoreClosures { get; set; }
 
         /// <summary>
-        /// Gets or sets a factor that penalizes the cost when traversing a closed edge (eg: if search_filter.exclude_closures is false for origin and/or destination location and the route starts/ends on closed edges). Its value can range from 1.0 - don't penalize closed edges, to 10.0 - apply high cost penalty to closed edges. Default value is 9.0. Note: This factor is applicable only for motorized modes of transport, i.e auto, motorcycle, motor_scooter, bus, truck & taxi.
+        /// Gets or sets a factor that penalizes the cost when traversing a closed edge (eg: if search_filter.exclude_closures is false for origin and/or destination location and the route starts/ends on closed edges). Its value can range from 1.0 - don't penalize closed edges, to 10.0 - apply high cost penalty to closed edges. Default value is 9.0. Note: This factor is applicable only for motorized modes of transport, i.e auto, motorcycle, motor_scooter, bus, truck + taxi.
         /// </summary>
         /// <remarks>Available for auto, motor_scooter, motorcycle, bus and truck costing methods.</remarks>
         [JsonPropertyName("closure_factor")]

@@ -47,7 +47,7 @@ namespace FPH.ValhallaNET.Models
         /// <summary>
         /// Gets or sets wheather to exclude roads considered closed due to live traffic closure. Defaults to true.
         /// </summary>
-        /// <remarks>This option cannot be set if costing_options.<costing>.ignore_closures is also specified. An error is returned if both options are specified.\nIgnoring closures at destination and source locations does NOT work for date_time type 0/1 & 2 respectively.</remarks>
+        /// <remarks>This option cannot be set if costing_options.{costing}.ignore_closures is also specified. An error is returned if both options are specified.\nIgnoring closures at destination and source locations does NOT work for date_time type 0/1 + 2 respectively.</remarks>
         [JsonPropertyName("exclude_closures")]
         public bool? ExcludeClosures { get; set; }
 
