@@ -38,8 +38,7 @@ namespace FPH.ValhallaNET.Models
         /// Gets or sets the language of the narration instructions. If the user specified a language in the directions options and the specified language was supported - this returned value will be equal to the specified value. Otherwise, this value will be the default (en-US) language.
         /// </summary>
         [JsonPropertyName("language")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public LanguageTag? Language { get; set; }
+        public string? Language { get; set; }
 
         /// <summary>
         /// Gets or sets the Id of the route request if set.

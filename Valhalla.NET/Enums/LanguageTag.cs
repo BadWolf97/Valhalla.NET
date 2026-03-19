@@ -27,11 +27,13 @@ namespace FPH.ValhallaNET.Enums
         /// <summary>
         /// German.
         /// </summary>
+        [JsonPropertyName("de-DE")]
         De,
 
         /// <summary>
         /// English.
         /// </summary>
+        [JsonPropertyName("en-US")]
         En,
 
         /// <summary>

@@ -62,13 +62,19 @@ namespace FPH.ValhallaNET.Models
         /// Gets or sets the estimated time along the maneuver in seconds.
         /// </summary>
         [JsonPropertyName("time")]
-        public int? Time { get; set; }
+        public double? Time { get; set; }
 
         /// <summary>
         /// Gets or sets the maneuver length in the units specified.
         /// </summary>
         [JsonPropertyName("length")]
         public double? Length { get; set; }
+
+        /// <summary>
+        /// Gets or sets the cost associated with the item or operation.
+        /// </summary>
+        [JsonPropertyName("cost")]
+        public double? Cost { get; set; }
 
         /// <summary>
         /// Gets or sets the index into the list of shape points for the start of the maneuver.
