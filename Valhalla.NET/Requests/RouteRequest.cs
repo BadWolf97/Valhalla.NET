@@ -38,7 +38,7 @@ namespace FPH.ValhallaNET.Requests
         /// Gets or sets the costing options for the route.
         /// </summary>
         [JsonPropertyName("costing_options")]
-        public KeyValuePair<CostingModel, CostingOptions>? CostingOptions { get; set; }
+        public Dictionary<CostingModel, CostingOptions>? CostingOptions { get; set; }
 
         /// <summary>
         /// Gets or sets additional costing options for the route.

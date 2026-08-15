@@ -348,6 +348,7 @@ namespace FPH.ValhallaNET.Models
         /// </summary>
         /// <remarks>Available for bicycle costing methods.</remarks>
         [JsonPropertyName("bicycle_type")]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public BicycleType? BicycleType { get; set; }
 
         /// <summary>

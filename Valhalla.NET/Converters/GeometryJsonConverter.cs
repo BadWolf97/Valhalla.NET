@@ -29,8 +29,14 @@ namespace FPH.ValhallaNET.Converters
         {
             using JsonDocument doc = JsonDocument.ParseValue(ref reader);
             var root = doc.RootElement;
-            string? json_type = root.GetProperty("type").GetString();
-            string json_coordinates = root.GetProperty("coordinates").ToString();
+
+            if (!root.TryGetProperty("type", out JsonElement typeElement) || !root.TryGetProperty("coordinates", out JsonElement coordinatesElement))
+            {
+                throw new JsonException("The geometry object is missing the required \"type\" or \"coordinates\" property.");
+            }
+
+            string? json_type = typeElement.GetString();
+            string json_coordinates = coordinatesElement.ToString();
 
             if (json_type == null || json_coordinates == null)
             {
@@ -85,6 +91,7 @@ namespace FPH.ValhallaNET.Converters
         {
             writer.WriteStartObject();
             writer.WriteString("type", value.Type.ToString());
+            writer.WritePropertyName("coordinates");
 
             switch (value.Type)
             {

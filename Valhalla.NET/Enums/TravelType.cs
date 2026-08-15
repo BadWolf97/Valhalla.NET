@@ -25,9 +25,35 @@ namespace FPH.ValhallaNET.Enums
         Foot,
 
         /// <summary>
-        /// The travel type is cycling.
+        /// The travel type is cycling on a road-style bicycle.
         /// </summary>
         Road,
+
+        /// <summary>
+        /// The travel type is cycling on a hybrid/city-style bicycle. This is Valhalla's default
+        /// bicycle type, so this value is returned unless bicycle_type was explicitly overridden.
+        /// </summary>
+        Hybrid,
+
+        /// <summary>
+        /// The travel type is cycling on a cyclo-cross bicycle.
+        /// </summary>
+        Cross,
+
+        /// <summary>
+        /// The travel type is cycling on a mountain bicycle.
+        /// </summary>
+        Mountain,
+
+        /// <summary>
+        /// The travel type is walking as a pedestrian using a wheelchair.
+        /// </summary>
+        Wheelchair,
+
+        /// <summary>
+        /// The travel type is walking as a blind pedestrian.
+        /// </summary>
+        Blind,
 
         /// <summary>
         /// The travel type is tram.

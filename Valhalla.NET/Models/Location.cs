@@ -190,7 +190,7 @@ namespace FPH.ValhallaNET.Models
         /// <summary>
         /// Gets or sets the side of street of a break location that is determined based on the actual route when the location is offset from the street. The possible values are left and right.
         /// </summary>
-        [JsonPropertyName("side_of street")]
+        [JsonPropertyName("side_of_street")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public SideOfStreet? SideOfStreet { get; set; }
 
