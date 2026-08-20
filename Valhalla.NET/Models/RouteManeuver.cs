@@ -6,6 +6,7 @@
 // ----------------------------------------------------------------------------
 
 using System.Text.Json.Serialization;
+using FPH.ValhallaNET.Converters;
 using FPH.ValhallaNET.Enums;
 
 namespace FPH.ValhallaNET.Models
@@ -177,7 +178,7 @@ namespace FPH.ValhallaNET.Models
         /// Gets or sets the travel type for the maneuver.
         /// </summary>
         [JsonPropertyName("travel_type")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
+        [JsonConverter(typeof(SnakeCaseEnumConverter<TravelType>))]
         public TravelType? TravelType { get; set; }
 
         /// <summary>

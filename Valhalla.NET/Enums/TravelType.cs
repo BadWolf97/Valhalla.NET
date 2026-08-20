@@ -5,8 +5,6 @@
 // </copyright>
 // ----------------------------------------------------------------------------
 
-using System.Text.Json.Serialization;
-
 namespace FPH.ValhallaNET.Enums
 {
     /// <summary>
@@ -18,6 +16,21 @@ namespace FPH.ValhallaNET.Enums
         /// The travel type is driving.
         /// </summary>
         Car,
+
+        /// <summary>
+        /// The travel type is riding a motorcycle.
+        /// </summary>
+        Motorcycle,
+
+        /// <summary>
+        /// The travel type is riding a motor scooter.
+        /// </summary>
+        MotorScooter,
+
+        /// <summary>
+        /// The travel type is driving a truck.
+        /// </summary>
+        Truck,
 
         /// <summary>
         /// The travel type is walking.
@@ -83,7 +96,6 @@ namespace FPH.ValhallaNET.Enums
         /// <summary>
         /// The travel type is cable car.
         /// </summary>
-        [JsonPropertyName("cable_car")]
         CableCar,
 
         /// <summary>

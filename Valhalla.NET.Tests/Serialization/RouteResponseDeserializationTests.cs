@@ -111,6 +111,28 @@ namespace FPH.ValhallaNET.Tests.Serialization
             Assert.Equal(TravelType.Car, maneuver.TravelType);
         }
 
+        [Theory]
+        [InlineData("car", TravelType.Car)]
+        [InlineData("motorcycle", TravelType.Motorcycle)]
+        [InlineData("motor_scooter", TravelType.MotorScooter)]
+        [InlineData("truck", TravelType.Truck)]
+        [InlineData("bus", TravelType.Bus)]
+        [InlineData("cable_car", TravelType.CableCar)]
+        public void FromJson_MapsDriveTravelTypesToEnum(string travelType, TravelType expected)
+        {
+            // Regression test: Valhalla's drive travel_mode is not limited to "car" - the truck,
+            // motorcycle, motor_scooter and bus costing models report their own travel_type value
+            // for the same travel_mode ("drive"). Those values were missing from the TravelType
+            // enum, so System.Text.Json threw a JsonException for every maneuver of a truck route
+            // instead of deserializing it. Also covers "cable_car", which used a [JsonPropertyName]
+            // attribute on the enum member that JsonStringEnumConverter silently ignores.
+            string json = "{\"trip\":{\"status\":0,\"legs\":[{\"maneuvers\":[{\"type\":1,\"travel_mode\":\"drive\",\"travel_type\":\"" + travelType + "\"}]}]}}";
+
+            RouteResponse response = RouteResponse.FromJson(json)!;
+
+            Assert.Equal(expected, response.Trip!.Legs![0].Maneuvers![0].TravelType);
+        }
+
         [Fact]
         public void FromJson_IgnoresUnknownFieldsWithoutThrowing()
         {
